@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import Stop from "./models/Stop.js";
+import Device from "./models/Device.js";
 
 dotenv.config();
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
@@ -15,28 +17,87 @@ app.use(bodyParser.json());
 await mongoose.connect(MONGODB_URI);
 console.log("🛢️ [mongodb]: Connected to MongoDB");
 
+// testing purposes
 app.get("/", (req, res) => {
   console.log("🔗[GET]: /");
+  res.send("Hello World!");
   res.send();
 });
 
-// map initialization
-app.get("/api/map-data", (req, res) => {
-  console.log("🔗[GET]: /api/map-data");
+// query DB for all stops and send them to client
+app.get("/api/stops", async (req, res) => {
+  console.log("🔗[GET]: /api/stops");
 
-  const mapData = {
-    accessToken: MAPBOX_TOKEN,
-    container: "map",
-    style: "mapbox://styles/mapbox/streets-v12",
-    center: [72.991803, 33.644962],
-    zoom: 0,
-    maxBounds: [
-      [72.979412, 33.633239],
-      [73.003793, 33.656912],
-    ],
-  };
+  const stops = await Stop.find({});
+  res.send(stops);
+});
 
-  res.json(mapData);
+app.get("/api/devices", async (req, res) => {
+  console.log("🔗[GET]: /api/devices");
+
+  const devices = await Device.find({});
+  devices.forEach(async (device) => {
+    const stop = await Stop.findOne({ name: device.nextStop });
+
+    function calculateDistance(coord1, coord2) {
+      const [lon1, lat1] = coord1;
+      const [lon2, lat2] = coord2;
+
+      const R = 6371e3; // Earth's radius in meters
+      const phi1 = (lat1 * Math.PI) / 180;
+      const phi2 = (lat2 * Math.PI) / 180;
+      const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
+      const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
+
+      const a =
+        Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+        Math.cos(phi1) *
+          Math.cos(phi2) *
+          Math.sin(deltaLambda / 2) *
+          Math.sin(deltaLambda / 2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      const distance = R * c;
+      return distance;
+    }
+
+    const thresholdDistance = 30;
+    let distance = calculateDistance(device.coordinates, stop.coordinates);
+    while (distance < thresholdDistance) {
+      const stop = await Stop.findOne({ name: stop.nextStop });
+      distance = calculateDistance(device.coordinates, stop.coordinates);
+    }
+
+    device.nextStop = stop.name;
+    await device.save();
+
+    const mapboxQuery = await fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${device.coordinates[0]},${device.coordinates[1]};${stop.coordinates[0]},${stop.coordinates[1]}?steps=true&geometries=geojson&access_token=${MAPBOX_TOKEN}`
+    );
+    const json = await mapboxQuery.json();
+    const data = json.routes[0];
+    const route = data.geometry.coordinates;
+    const geojson = {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "LineString",
+        coordinates: route,
+      },
+    };
+    res.send({ message: `Updated Map Location: ${device.name}`, geojson, device });
+  });
+});
+
+app.post("/api/devices", async (req, res) => {
+  console.log("🔗[POST]: /api/devices");
+
+  const { name, coordinates } = req.body;
+  const device = await Device.findOne({ name });
+  device.coordinates = coordinates;
+  await device.save();
+  res.send({ message: `Updated DB: ${device.name}` });
 });
 
 app.listen(PORT, () => {

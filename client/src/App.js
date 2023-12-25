@@ -1,27 +1,133 @@
+import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { useEffect } from "react";
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiYS1heWVzaCIsImEiOiJjbHE2cmlzcGIwdm95MmpwYW1lcGRreHVrIn0.w_oo2GS_trjTKixQ6TQAOw";
 
 function App() {
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+
   useEffect(() => {
-    fetch("http://localhost:4000/api/map-data")
-      .then((response) => response.json())
-      .then((mapData) => {
-        // Initialize map with received data
-        const map = new mapboxgl.Map({
-          accessToken: mapData.accessToken,
-          container: mapData.container,
-          style: mapData.style,
-          center: mapData.center,
-          zoom: mapData.zoom,
+    if (map.current) return; // initialize map only once
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [72.991803, 33.644962],
+      zoom: 0,
+      maxBounds: [
+        [72.979412, 33.633239],
+        [73.003793, 33.656912],
+      ],
+    });
+    
+    async function initStops() {
+      const res = await fetch("http://localhost:4000/api/stops");
+      const stops = await res.json();
+      stops.forEach((stop) => {
+        map.current.addLayer({
+          id: stop._id,
+          type: "circle",
+          source: {
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              features: [
+                {
+                  type: "Feature",
+                  properties: {},
+                  geometry: {
+                    type: "Point",
+                    coordinates: stop.coordinates,
+                  },
+                },
+              ],
+            },
+          },
+          paint: {
+            "circle-radius": 10,
+            "circle-color": "#3887be",
+          },
         });
-        map.setMaxBounds(mapData.maxBounds);
-      })
-      .catch((error) => console.error("Error fetching map data:", error));
+      });
+    }
+
+    map.current.on("load", async () => {
+      await initStops();
+
+      setInterval(async () => {
+        const res = await fetch("http://localhost:4000/api/devices");
+        const data = await res.json();
+        console.log(data.message);
+        if (map.current.getSource("route")) {
+          map.current.getSource("route").setData(data.geojson);
+        }
+        else {
+          map.current.addLayer({
+            id: "route",
+            type: "line",
+            source: {
+              type: "geojson",
+              data: data.geojson,
+            },
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "#3887be",
+              "line-width": 5,
+              "line-opacity": 0.75,
+            },
+          });
+        }
+        if (map.current.getSource(data.device._id)) {
+          map.current.getSource(data.device._id).setData({
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: {},
+                geometry: {
+                  type: "Point",
+                  coordinates: data.device.coordinates,
+                },
+              },
+            ],
+          });
+        } else {
+          map.current.addLayer({
+            id: data.device._id,
+            type: "circle",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {},
+                    geometry: {
+                      type: "Point",
+                      coordinates: data.device.coordinates,
+                    },
+                  },
+                ],
+              },
+            },
+            paint: {
+              "circle-radius": 10,
+              "circle-color": "#f30",
+            },
+          });
+        }
+      }, 10000);
+    });
   }, []);
 
   return (
     <div>
-      <div id="map"></div>
+      <div ref={mapContainer} className="map-container" />
     </div>
   );
 }

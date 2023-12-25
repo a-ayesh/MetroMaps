@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetroMaps | Device Tracker</title>
+  </head>
+  <body>
+    <h1>This page is intended to be used by the GPS devices</h1>
+    <script>
+      let agent = navigator.userAgent.toLowerCase();
+
+      function getDeviceLocation() {
+        console.log(
+          "===========================================GETTING DEVICE LOCATION==========================================="
+        );
+        return new Promise((resolve, reject) => {
+          if ("geolocation" in navigator) {
+            navigator.geolocation.watchPosition(
+              (position) => {
+                resolve([position.coords.longitude, position.coords.latitude]);
+              },
+              (error) => {
+                reject(error);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: Infinity,
+              }
+            );
+          } else {
+            reject("Geolocation is not supported by your browser");
+          }
+        });
+      }
+
+      async function sendDeviceLocation() {
+        const deviceCoordinates = await getDeviceLocation();
+
+        // Data to be sent in the POST request
+        const postData = {
+          name: agent,
+          coordinates: deviceCoordinates,
+        };
+
+        // Perform the POST request using the fetch API
+        fetch("http://10.7.32.141:4000/api/devices", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Server response:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error.message);
+          });
+      }
+
+      // Execute the sendDeviceLocation function every 10 seconds
+      setInterval(sendDeviceLocation, 10000);
+    </script>
+  </body>
+</html>
