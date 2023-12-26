@@ -20,9 +20,9 @@ function App() {
         [73.003793, 33.656912],
       ],
     });
-    
+
     async function initStops() {
-      const res = await fetch("http://localhost:4000/api/stops");
+      const res = await fetch("http://localhost:4000/api/initialize-map");
       const stops = await res.json();
       stops.forEach((stop) => {
         map.current.addLayer({
@@ -57,69 +57,67 @@ function App() {
 
       setInterval(async () => {
         const res = await fetch("http://localhost:4000/api/devices");
-        const data = await res.json();
-        console.log(data.message);
-        if (map.current.getSource("route")) {
-          map.current.getSource("route").setData(data.geojson);
-        }
-        else {
-          map.current.addLayer({
-            id: "route",
-            type: "line",
-            source: {
-              type: "geojson",
-              data: data.geojson,
-            },
-            layout: {
-              "line-join": "round",
-              "line-cap": "round",
-            },
-            paint: {
-              "line-color": "#3887be",
-              "line-width": 5,
-              "line-opacity": 0.75,
-            },
-          });
-        }
-        if (map.current.getSource(data.device._id)) {
-          map.current.getSource(data.device._id).setData({
-            type: "FeatureCollection",
-            features: [
-              {
-                type: "Feature",
-                properties: {},
-                geometry: {
-                  type: "Point",
-                  coordinates: data.device.coordinates,
+        const parsedRes = await res.json();
+        console.log(parsedRes.message);
+        for (const data of parsedRes.deviceArray) {
+          if (map.current.getSource("route-" + data.device._id)) {
+            map.current.getSource("route-" + data.device._id).setData(data.geojson);
+            map.current.getSource(data.device._id).setData({
+              type: "FeatureCollection",
+              features: [
+                {
+                  type: "Feature",
+                  properties: {},
+                  geometry: {
+                    type: "Point",
+                    coordinates: data.device.coordinates,
+                  },
+                },
+              ],
+            });
+          } else {
+            map.current.addLayer({
+              id: ("route-" + data.device._id),
+              type: "line",
+              source: {
+                type: "geojson",
+                data: data.geojson,
+              },
+              layout: {
+                "line-join": "round",
+                "line-cap": "round",
+              },
+              paint: {
+                "line-color": "#3887be",
+                "line-width": 5,
+                "line-opacity": 0.75,
+              },
+            });
+            map.current.addLayer({
+              id: data.device._id,
+              type: "circle",
+              source: {
+                type: "geojson",
+                data: {
+                  type: "FeatureCollection",
+                  features: [
+                    {
+                      type: "Feature",
+                      properties: {},
+                      geometry: {
+                        type: "Point",
+                        coordinates: data.device.coordinates,
+                      },
+                    },
+                  ],
                 },
               },
-            ],
-          });
-        } else {
-          map.current.addLayer({
-            id: data.device._id,
-            type: "circle",
-            source: {
-              type: "geojson",
-              data: {
-                type: "FeatureCollection",
-                features: [
-                  {
-                    type: "Feature",
-                    properties: {},
-                    geometry: {
-                      type: "Point",
-                      coordinates: data.device.coordinates,
-                    },
-                  },
-                ],
+              paint: {
+                "circle-radius": 10,
+                "circle-color": "#f30",
               },
-            },
-            paint: {
-              "circle-radius": 10,
-              "circle-color": "#f30",
-            },
-          });
+            });
+          }
         }
       }, 10000);
     });

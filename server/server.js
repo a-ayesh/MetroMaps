@@ -25,8 +25,8 @@ app.get("/", (req, res) => {
 });
 
 // query DB for all stops and send them to client
-app.get("/api/stops", async (req, res) => {
-  console.log("🔗[GET]: /api/stops");
+app.get("/api/initialize-map", async (req, res) => {
+  console.log("🔗[GET]: /api/initialize-map");
 
   const stops = await Stop.find({});
   res.send(stops);
@@ -35,8 +35,10 @@ app.get("/api/stops", async (req, res) => {
 app.get("/api/devices", async (req, res) => {
   console.log("🔗[GET]: /api/devices");
 
+  let deviceArray = [];
   const devices = await Device.find({});
-  devices.forEach(async (device) => {
+
+  for (const device of devices) {
     const stop = await Stop.findOne({ name: device.nextStop });
 
     function calculateDistance(coord1, coord2) {
@@ -86,14 +88,17 @@ app.get("/api/devices", async (req, res) => {
         coordinates: route,
       },
     };
-    res.send({ message: `Updated Map Location: ${device.name}`, geojson, device });
-  });
+
+    deviceArray.push({device, geojson});
+  }
+  res.send({ message: "Updated Map Locations", deviceArray });
 });
 
 app.post("/api/devices", async (req, res) => {
   console.log("🔗[POST]: /api/devices");
 
   const { name, coordinates } = req.body;
+  console.log("Updated: ", name);
   const device = await Device.findOne({ name });
   device.coordinates = coordinates;
   await device.save();
