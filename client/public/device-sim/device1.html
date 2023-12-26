@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetroMaps | Device Tracker</title>
+  </head>
+  <body>
+    <h1>This page is for mock GPS device 1</h1>
+    <script>
+      const agent = "device 1";
+      const deviceRoute = [
+        [72.990964, 33.635091], // spawn
+        [72.990342, 33.635895], 
+        [72.989517, 33.636921], // SMME1
+        [72.988668, 33.638204],  
+        [72.987632, 33.639480], // Boys Hostel1
+        [72.986850, 33.640599], 
+        [72.985724, 33.642034], // NICE1
+        [72.985120, 33.644057], 
+        [72.985693, 33.645888], // Roundabout
+        [72.988206, 33.647267], 
+        [72.990987, 33.647044], // SCME
+        [72.991972, 33.646571], 
+        [72.993185, 33.645713], // Girls Hostel
+        [72.994117, 33.644186],
+        [72.993782, 33.642198], // Library
+        [72.990777, 33.641596], 
+        [72.988227, 33.642618], // Concordia 2
+        [72.987027, 33.642700], 
+        [72.985724, 33.642034], // NICE2
+        [72.986850, 33.640599], 
+        [72.987632, 33.639480], // Boys Hostel2
+        [72.988668, 33.638204],  
+        [72.989517, 33.636921], // SMME2
+        [72.990342, 33.635895], 
+        [72.990964, 33.635091], // spawn
+    ];
+      let i = 0;
+
+      function getDeviceLocation() {
+        if (i === deviceRoute.length) {
+          i = 0;
+        }
+        console.log(
+          "===========================================GETTING DEVICE LOCATION==========================================="
+        );
+        return deviceRoute[i++];
+      }
+
+      async function sendDeviceLocation() {
+        const deviceCoordinates = await getDeviceLocation();
+
+        // Data to be sent in the POST request
+        const postData = {
+          name: agent,
+          coordinates: deviceCoordinates,
+        };
+
+        // Perform the POST request using the fetch API
+        fetch("http://localhost:4000/api/devices", {
+        // fetch("https://metromapsserver-ugap.onrender.com/api/devices", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Server response:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error.message);
+          });
+      }
+
+      // Execute the sendDeviceLocation function every 10 seconds
+      setInterval(sendDeviceLocation, 3000);
+    </script>
+  </body>
+</html>

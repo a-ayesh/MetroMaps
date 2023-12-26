@@ -39,7 +39,7 @@ app.get("/api/devices", async (req, res) => {
   const devices = await Device.find({});
 
   for (const device of devices) {
-    const stop = await Stop.findOne({ name: device.nextStop });
+    let stop = await Stop.findOne({ name: device.nextStop });
 
     function calculateDistance(coord1, coord2) {
       const [lon1, lat1] = coord1;
@@ -67,7 +67,7 @@ app.get("/api/devices", async (req, res) => {
     const thresholdDistance = 30;
     let distance = calculateDistance(device.coordinates, stop.coordinates);
     while (distance < thresholdDistance) {
-      const stop = await Stop.findOne({ name: stop.nextStop });
+      stop = await Stop.findOne({ name: stop.nextStop });
       distance = calculateDistance(device.coordinates, stop.coordinates);
     }
 
@@ -98,8 +98,7 @@ app.post("/api/devices", async (req, res) => {
   console.log("🔗[POST]: /api/devices");
 
   const { name, coordinates } = req.body;
-  console.log("Updated: ", name);
-  const device = await Device.findOne({ name });
+  const device = await Device.findOne({ name: name });
   device.coordinates = coordinates;
   await device.save();
   res.send({ message: `Updated DB: ${device.name}` });

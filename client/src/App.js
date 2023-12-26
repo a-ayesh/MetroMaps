@@ -2,12 +2,13 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoiYS1heWVzaCIsImEiOiJjbHE2cmlzcGIwdm95MmpwYW1lcGRreHVrIn0.w_oo2GS_trjTKixQ6TQAOw";
+  "pk.eyJ1IjoiYS1heWVzaCIsImEiOiJjbHFtOHdzMHQyd2Q0MmlubTh3eXlqeDc0In0.E2UnAwKp1j4EiC1NOpM9zA";
 
 function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
+  // wait for map to mount
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
@@ -21,6 +22,7 @@ function App() {
       ],
     });
 
+    // initialize stops
     async function initStops() {
       const res = await fetch("http://localhost:4000/api/initialize-map");
       const stops = await res.json();
@@ -52,10 +54,9 @@ function App() {
       });
     }
 
-    map.current.on("load", async () => {
-      await initStops();
-
-      setInterval(async () => {
+    // update devices on map
+    function updateDevices() {
+      const fetchData = async () => {
         const res = await fetch("http://localhost:4000/api/devices");
         const parsedRes = await res.json();
         console.log(parsedRes.message);
@@ -77,7 +78,7 @@ function App() {
             });
           } else {
             map.current.addLayer({
-              id: ("route-" + data.device._id),
+              id: "route-" + data.device._id,
               type: "line",
               source: {
                 type: "geojson",
@@ -119,7 +120,17 @@ function App() {
             });
           }
         }
-      }, 10000);
+      };
+
+      fetchData();
+    }
+
+    // wait for map to load
+    map.current.on("load", async () => {
+      await initStops();
+      updateDevices();
+
+      setInterval(updateDevices, 3000);
     });
   }, []);
 
