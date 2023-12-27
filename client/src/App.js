@@ -1,14 +1,18 @@
-import React, { useRef, useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Map from "./components/Map";
+import { Outlet } from "react-router-dom";
 import TopNavBar from "./components/TopNavbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div>
-      <TopNavBar />
-      <Map />
-    </div>
+    <>
+      <div id="TopNavBar">
+        <TopNavBar />
+      </div>
+      <Outlet />
+      <div id="Footer">
+        <Footer />
+      </div>
+    </>
   );
 }
 

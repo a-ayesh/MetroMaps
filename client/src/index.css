@@ -1,5 +1,42 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
 #root {
-  background-color: lightgray;
+  background-color: darkslategray;
+}
+
+#Logo {
+  height: 5vh;
+  margin: 0 auto;
+  display: block;
+}
+
+#TopNavBar {
+  font-weight: bold;
+}
+
+#TopNavBar .custom-link {
+  position: relative;
+  color: black;
+  overflow: hidden;
+}
+
+#TopNavBar .custom-link::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0;
+  background-color: green;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+#TopNavBar .custom-link:hover::after {
+  width: 100%;
 }
 
 .map-container {
@@ -7,4 +44,47 @@
   top: 0;
   bottom: 0;
   width: 100%;
-  }
+}
+
+#info-container .collapse,
+.collapsing {
+  overflow: auto;
+  max-height: 46vh;
+}
+
+#metro-select .btn-metro-select {
+  width: 100%;
+  text-align: left;
+  
+}
+#metro-select .btn-metro-select:hover {
+  background-color: limegreen;
+  color: darkslategray;
+}
+#metro-select .btn-metro-select:focus {
+  background-color: limegreen;
+  color: darkslategray;
+}
+
+#google-map-container {
+  height: 80vh;
+  background-color: white;
+  padding: 0px;
+}
+
+#google-map-container img {
+  width: 100%;
+  height: 100%;
+}
+
+#metro-select .btn-route-map {
+  width: 100%;
+  font-weight: bolder;
+  color: darkslategray;
+  background-color: limegreen;
+}
+
+#metro-select .btn-route-map:hover {
+  color: white;
+  background-color: darkslategray;
+}

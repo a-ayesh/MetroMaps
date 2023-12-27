@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYS1heWVzaCIsImEiOiJjbHFtOHdzMHQyd2Q0MmlubTh3eXlqeDc0In0.E2UnAwKp1j4EiC1NOpM9zA";
 
-function Map() {
+function TrackerMap() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -137,14 +137,12 @@ function Map() {
   }, []);
 
   return (
-    <div id="mapbox" className="col-6 mx-auto">
-      <div
-        style={{ height: "calc(100vh - 56px)" }}
-        ref={mapContainer}
-        className="map-container"
-      />
-    </div>
+    <div
+      style={{ height: "calc(100vh - 56px)" }}
+      ref={mapContainer}
+      className="map-container"
+    />
   );
 }
 
-export default Map;
+export default TrackerMap;
