@@ -197,170 +197,58 @@ function MetroSelect({ onStationSelect }) {
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Saddar")}
+            onClick={() => handleButtonClick("Islamabad International Airport")}
           >
-            Saddar
+            Islamabad International Airport
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Marrir Chowk")}
+            onClick={() => handleButtonClick("26 No.")}
           >
-            Marrir Chowk
+            26 No.
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Liaquat Bagh")}
+            onClick={() => handleButtonClick("Golra Morr")}
           >
-            Liaquat Bagh
+            Golra Morr
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Committee Chowk")}
+            onClick={() => handleButtonClick("NUST")}
           >
-            Committee Chowk
+            NUST
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Waris Khan")}
+            onClick={() => handleButtonClick("G-12")}
           >
-            Waris Khan
+            G-12
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Chandni Chowk")}
+            onClick={() => handleButtonClick("G-11")}
           >
-            Chandni Chowk
+            G-11
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("Rehmanabad")}
+            onClick={() => handleButtonClick("G-10")}
           >
-            Rehmanabad
+            G-10
           </Button>
           <Button
             variant="metro-select"
             size="sm"
-            onClick={() => handleButtonClick("6th Road")}
+            onClick={() => handleButtonClick("NHA")}
           >
-            6th Road
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Shamsabad")}
-          >
-            Shamsabad
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Faizabad")}
-          >
-            Faizabad
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("IJP")}
-          >
-            IJP
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Potohar")}
-          >
-            Potohar
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Khayaban-e-Johar")}
-          >
-            Khayaban-e-Johar
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Faiz Ahmad Faiz")}
-          >
-            Faiz Ahmad Faiz
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Kashmir Highway")}
-          >
-            Kashmir Highway
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Chaman")}
-          >
-            Chaman
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Ibn-e-Sina")}
-          >
-            Ibn-e-Sina
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Katchery")}
-          >
-            Katchery
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("PIMS")}
-          >
-            PIMS
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Stock Exchange")}
-          >
-            Stock Exchange
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("7th Avenue")}
-          >
-            7th Avenue
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Shaheed-e-Millat")}
-          >
-            Shaheed-e-Millat
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Parade Ground")}
-          >
-            Parade Ground
-          </Button>
-          <Button
-            variant="metro-select"
-            size="sm"
-            onClick={() => handleButtonClick("Secretariat")}
-          >
-            Secretariat
+            NHA
           </Button>
         </Accordion.Body>
       </Accordion.Item>

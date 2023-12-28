@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Stop from "../models/Stop.js";
+import ISBstop from "../models/ISBstop.js";
 import Device from "../models/Device.js";
 import dotenv from "dotenv";
 
@@ -8,10 +9,18 @@ const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 const router = Router();
 
 // query DB for all stops and send them to client
-router.get("/initialize", async (req, res) => {
-  console.log("🔗[GET]: /tracker/initialize");
+router.get("/initialize-nust", async (req, res) => {
+  console.log("🔗[GET]: /tracker/initialize-nust");
 
   const stops = await Stop.find({});
+  res.send(stops);
+});
+
+// query DB for all stops and send them to client
+router.get("/initialize-twins", async (req, res) => {
+  console.log("🔗[GET]: /tracker/initialize-twins");
+
+  const stops = await ISBstop.find({});
   res.send(stops);
 });
 
@@ -80,9 +89,9 @@ router.get("/update", async (req, res) => {
 
 // update DB with new coordinates
 router.post("/update", async (req, res) => {
-  console.log("🔗[POST]: /tracker/update");
-
   const { name, coordinates } = req.body;
+  console.log(`🔗[POST]: /tracker/update from ${name}`);
+  
   const device = await Device.findOne({ name: name });
   device.coordinates = coordinates;
   await device.save();
