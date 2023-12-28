@@ -4,11 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import React, { useState } from "react";
 
-function TopNavBar() {
+function TopNavBar({ onCitySelect }) {
   const [selectedCity, setSelectedCity] = useState("Twin Cities");
 
-  const handleItemClick = (item) => {
-    setSelectedCity(item);
+  const handleItemClick = (city) => {
+    onCitySelect(city);
+    setSelectedCity(city);
   };
 
   return (
@@ -62,6 +63,13 @@ function TopNavBar() {
                 onClick={() => handleItemClick("Quetta")}
               >
                 Quetta
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item
+                href="#action/3.7"
+                onClick={() => handleItemClick("NUST")}
+              >
+                NUST
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/tracker" className="me-4 custom-link">TRACKER</Nav.Link>

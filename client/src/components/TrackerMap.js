@@ -4,12 +4,14 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYS1heWVzaCIsImEiOiJjbHFtOHdzMHQyd2Q0MmlubTh3eXlqeDc0In0.E2UnAwKp1j4EiC1NOpM9zA";
 
-function TrackerMap() {
+function TrackerMap({ selectedCity }) {
+  
   const mapContainer = useRef(null);
   const map = useRef(null);
-
+  
   // wait for map to mount
   useEffect(() => {
+    if (selectedCity !== "NUST") return; // initialize map only if Islamabad is selected
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -22,6 +24,11 @@ function TrackerMap() {
       ],
     });
 
+    map.current.loadImage('images/geo.png', function(error, image) {
+      if (error) throw error;
+      map.current.addImage('geo', image);
+    });
+
     // initialize stops
     async function initStops() {
       const res = await fetch("http://localhost:4000/tracker/initialize");
@@ -29,7 +36,7 @@ function TrackerMap() {
       stops.forEach((stop) => {
         map.current.addLayer({
           id: stop._id,
-          type: "circle",
+          type: "symbol",
           source: {
             type: "geojson",
             data: {
@@ -46,9 +53,10 @@ function TrackerMap() {
               ],
             },
           },
-          paint: {
-            "circle-radius": 10,
-            "circle-color": "#3887be",
+          layout: {
+            "icon-image": "geo", // Replace with the ID of your custom marker symbol
+            "icon-size": 1.25, // Adjust the size of the marker as needed
+            "icon-allow-overlap": true,
           },
         });
       });
@@ -91,14 +99,14 @@ function TrackerMap() {
                 "line-cap": "round",
               },
               paint: {
-                "line-color": "#3887be",
-                "line-width": 5,
-                "line-opacity": 0.75,
+                "line-color": "#c7313d",
+                "line-width": 4,
+                "line-opacity": 0.5,
               },
             });
             map.current.addLayer({
               id: data.device._id,
-              type: "circle",
+              type: "symbol",
               source: {
                 type: "geojson",
                 data: {
@@ -115,9 +123,10 @@ function TrackerMap() {
                   ],
                 },
               },
-              paint: {
-                "circle-radius": 10,
-                "circle-color": "#f30",
+              layout: {
+                "icon-image": "bus", // Replace with the ID of your custom marker symbol
+                "icon-size": 1.25, // Adjust the size of the marker as needed
+                "icon-allow-overlap": true,
               },
             });
           }
@@ -134,11 +143,11 @@ function TrackerMap() {
 
       setInterval(updateDevices, 3000);
     });
-  }, []);
+  }, [selectedCity]);
 
   return (
     <div
-      style={{ height: "calc(100vh - 56px)" }}
+      style={{ height: "calc(100vh - 20vh)" }}
       ref={mapContainer}
       className="map-container"
     />

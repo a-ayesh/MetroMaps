@@ -6,15 +6,16 @@ function GoogleMap({ selectedStation }) {
   useEffect(() => {
     if (selectedStation === "Image") {
       setStation(null);
+    } else {
+      async function getStation() {
+        const res = await fetch(
+          `http://localhost:4000/home/map?station=${selectedStation}`
+        );
+        const data = await res.json();
+        setStation(data[0]);
+      }
+      getStation();
     }
-    async function getStation() {
-      const res = await fetch(
-        `http://localhost:4000/home/map?station=${selectedStation}`
-      );
-      const data = await res.json();
-      setStation(data[0]);
-    }
-    getStation();
   }, [selectedStation]);
 
   return (
