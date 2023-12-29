@@ -74,7 +74,7 @@ function TopNavBar({ onCitySelect }) {
             </NavDropdown>
             <Nav.Link href="/tracker" className="me-4 custom-link">TRACKER</Nav.Link>
               <Nav.Link href="/" className="me-4 custom-link">HOME</Nav.Link>
-            <Nav.Link href="/" className="me-4 custom-link">ABOUT</Nav.Link>
+            <Nav.Link href="/about" className="me-4 custom-link">ABOUT</Nav.Link>
             <Nav.Link href="/" className="me-4 custom-link">CONTACT</Nav.Link>
             <Nav.Link href="https://www.instagram.com/aceseedc?igsh=YnR6MjlmZjM5NzI=">
               <svg

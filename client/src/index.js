@@ -5,6 +5,8 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import Tracker from "./pages/Tracker";
+import About from "./pages/About";
+import ContactUs from "./pages/contact";
 import Home from "./pages/Home";
 
 const router = createBrowserRouter([
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
     {
       path: "/tracker",
       element: <Tracker />,
+    },
+    {
+      path: "/about",
+      element: <About />,
+    },
+    {
+      path: "/contact",
+      element: <ContactUs />,
     },
   ]
 },
