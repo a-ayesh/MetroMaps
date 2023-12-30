@@ -9,19 +9,22 @@ const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 const router = Router();
 
 // query DB for all stops and send them to client
-router.get("/initialize-nust", async (req, res) => {
-  console.log("🔗[GET]: /tracker/initialize-nust");
+router.get("/initialize", async (req, res) => {
+  console.log("🔗[GET]: /tracker/initialize");
 
-  const stops = await Stop.find({});
-  res.send(stops);
-});
-
-// query DB for all stops and send them to client
-router.get("/initialize-twins", async (req, res) => {
-  console.log("🔗[GET]: /tracker/initialize-twins");
-
-  const stops = await ISBstop.find({});
-  res.send(stops);
+  const { city } = req.query;
+  switch (city) {
+    case "Twin Cities":
+      const stops = await ISBstop.find({});
+      res.send(stops);
+      break;
+    case "NUST":
+      const nustStops = await Stop.find({});
+      res.send(nustStops);
+      break;
+    default:
+      res.send({ message: "Invalid City" });
+  }
 });
 
 // query DB for all devices and send them to client
