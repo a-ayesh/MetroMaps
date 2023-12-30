@@ -8,7 +8,7 @@
 }
 
 #Logo {
-  height:35px;
+  height: 35px;
   margin: 0 auto;
   display: block;
 }
@@ -97,7 +97,19 @@
   background-color: limegreen;
 }
 
+#locater .btn-route-map {
+  width: 50%;
+  font-weight: bolder;
+  color: darkslategray;
+  background-color: limegreen;
+}
+
 #metro-select .btn-route-map:hover {
+  color: white;
+  background-color: darkslategray;
+}
+
+#locater .btn-route-map:hover {
   color: white;
   background-color: darkslategray;
 }
@@ -106,18 +118,17 @@
   background-color: darkslategray;
   border-radius: 10px 0px 0px 10px;
   padding-right: 18vh;
-
 }
-#style-two{
+#style-two {
   background-color: darkslategray;
-  border-radius: 10px ;
+  border-radius: 10px;
   color: whitesmoke;
-  margin:10px;
+  margin: 10px;
   padding: 7px 0 7px 15px;
-  margin:10px;
+  margin: 10px;
 }
-#feature{
-  margin:10px;
+#feature {
+  margin: 10px;
 }
 @media (max-width: 768px) {
   #style {
@@ -129,6 +140,12 @@
 #Tracker {
   background-color: darkslategray;
   border-radius: 10px;
+}
+
+#Locater-map {
+  background-color: darkslategray;
+  border-radius: 10px;
+  height: 50vh;
 }
 
 #map-box-container div {
@@ -146,7 +163,7 @@
   display: flex;
   align-items: center;
   max-width: 600px;
-  margin:  0 10px 30px 10px;
+  margin: 0 10px 30px 10px;
   background-color: rgba(0, 0, 0, 0.1); /* Darker background color */
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
@@ -161,7 +178,6 @@
   flex-grow: 1;
   padding: 20px;
   border-radius: 10px;
-
 }
 
 .text-content h3 {

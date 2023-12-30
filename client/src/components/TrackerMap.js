@@ -35,7 +35,7 @@ function TrackerMap({ selectedCity }) {
     <div
       style={{ height: "calc(100vh - 20vh)" }}
       ref={mapContainer}
-      className="map-container"
+      className="map-container rounded"
     />
   );
 }
