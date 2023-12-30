@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MetroSelect from "../components/MetroSelect";
 import GoogleMap from "../components/GoogleMap";
+import Locater from "../components/Locater";
 import { useOutletContext } from "react-router-dom";
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
   };
 
   return (
+    <>
     <div id="info-container" className="container-fluid p-0">
       <div className="d-flex flex-row row justify-content-between">
         <div id="metro-select" className="col-md-2 offset-md-1">
@@ -27,6 +29,10 @@ function Home() {
         </div>
       </div>
     </div>
+    <div id="locater" className="container mt-5">
+      <Locater />
+    </div>
+    </>
   );
 }
 

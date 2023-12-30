@@ -6,7 +6,7 @@ function Tracker() {
   const [selectedCity] = useOutletContext();
 
   return (
-    <div id="Tracker" className="container p-2">
+    <div id="Tracker" className="container p-3 shadow-lg">
       <div id="mapbox-map-container" className="col-12 mx-auto">
         <TrackerMap selectedCity={selectedCity} />
       </div>
