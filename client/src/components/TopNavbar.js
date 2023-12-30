@@ -41,12 +41,6 @@ function TopNavBar({ onCitySelect }) {
                 Lahore
               </NavDropdown.Item>
               <NavDropdown.Item
-                href="#action/3.4"
-                onClick={() => handleItemClick("Faisalabad")}
-              >
-                Faisalabad
-              </NavDropdown.Item>
-              <NavDropdown.Item
                 href="#action/3.5"
                 onClick={() => handleItemClick("Multan")}
               >
@@ -57,12 +51,6 @@ function TopNavBar({ onCitySelect }) {
                 onClick={() => handleItemClick("Karachi")}
               >
                 Karachi
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="#action/3.7"
-                onClick={() => handleItemClick("Quetta")}
-              >
-                Quetta
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item

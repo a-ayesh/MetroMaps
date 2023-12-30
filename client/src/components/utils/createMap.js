@@ -25,13 +25,6 @@ function createMap(city, mapContainer) {
         [74.590504, 31.640197],
       ];
       break;
-    case "Faisalabad":
-      center = [73.098256, 31.459261];
-      maxBounds = [
-        [72.893812, 31.343721],
-        [73.321538, 31.535415],
-      ];
-      break;
     case "Multan":
       center = [71.486123, 30.213887];
       maxBounds = [
@@ -44,13 +37,6 @@ function createMap(city, mapContainer) {
       maxBounds = [
         [66.918275, 24.742484],
         [67.386198, 25.023873],
-      ];
-      break;
-    case "Quetta":
-      center = [66.99101, 30.200425];
-      maxBounds = [
-        [66.758074, 29.971818],
-        [67.146561, 30.384009],
       ];
       break;
     case "NUST":
