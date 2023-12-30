@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
 function MetroSelect({ onStationSelect, selectedCity }) {
   const [stops, setStops] = useState([]);
 
+  const { t } = useTranslation();
   const handleButtonClick = (station) => {
     onStationSelect(station);
   };
@@ -35,10 +38,10 @@ function MetroSelect({ onStationSelect, selectedCity }) {
         size="sm"
         onClick={() => handleButtonClick("Image")}
       >
-        Route Map
+        {t("home.title")}
       </Button>
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Red Line</Accordion.Header>
+        <Accordion.Header>{t("home.Line1")}</Accordion.Header>
         <Accordion.Body>
           {stops
             .filter((stop) => stop.line === "Red Line")
@@ -54,7 +57,7 @@ function MetroSelect({ onStationSelect, selectedCity }) {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
-        <Accordion.Header>Orange Line</Accordion.Header>
+        <Accordion.Header>{t("home.Line2")}</Accordion.Header>
         <Accordion.Body>
           {stops
             .filter((stop) => stop.line === "Orange Line")
@@ -70,7 +73,7 @@ function MetroSelect({ onStationSelect, selectedCity }) {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="2">
-        <Accordion.Header>Blue Line</Accordion.Header>
+        <Accordion.Header>{t("home.Line3")}</Accordion.Header>
         <Accordion.Body>
           {stops
             .filter((stop) => stop.line === "Blue Line")
@@ -86,7 +89,7 @@ function MetroSelect({ onStationSelect, selectedCity }) {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="3">
-        <Accordion.Header>Green Line</Accordion.Header>
+        <Accordion.Header>{t("home.Line4")}</Accordion.Header>
         <Accordion.Body>
           {stops
             .filter((stop) => stop.line === "Green Line")

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
 
 const ContactUs = () => {
   const [feedback, setFeedback] = useState('');
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,50 +18,50 @@ const ContactUs = () => {
 
   return (
     <div>
-      <h2 id='style-two'>Contact Us</h2>
+      <h2 id='style-two'>{t("contact.title")}</h2>
         <section id = "feature">
-        <h3>Get in Touch</h3>
-        <p>We'd love to hear from you! Contact us through any of the following means:</p>
+        <h3>{t("contact.heading1")}</h3>
+        <p>{t("contact.para1")}</p>
         </section>
       <div id='style-two'>
 
-        <h4>Contact Information</h4>
+        <h4>{t("contact.heading2")}</h4>
         <p>
-          <strong>Address:</strong> NUST Hostels/H-12, Islamabad, 44000, Pakistan
+          <strong>{t("contact.Address_key")}</strong>{t("contact.Address_value")}
           <br />
-          <strong>Email:</strong> General Inquiries: info@metrotrack.com
+          <strong>{t("contact.Email_key")}</strong>{t("contact.Email_value")}
           <br />
-          <strong>Phone:</strong> Main Office: +123 456 7890
+          <strong>{t("contact.Phone_key")}</strong>{t("contact.Phone_value")}
         </p>
 
-        <h4>Social Media</h4>
+        <h4>{t("contact.heading3")}</h4>
         <p>
-          Stay connected with us on social media:
+        {t("contact.para3")}
           <br />
-          <Button className="m-1" variant = 'dark'>Twitter</Button>{''}
-          <Button className="m-1" variant = 'info'>Facebook</Button>{''}
-          <Button className="m-1" variant = 'danger'>Instagram</Button>{''}
-          <Button className="m-1" variant = 'primary'>LinkedIn</Button>{''}
+          <Button className="m-1" variant = 'dark'>{t("contact.button1")}</Button>{''}
+          <Button className="m-1" variant = 'info'>{t("contact.button2")}</Button>{''}
+          <Button className="m-1" variant = 'danger'>{t("contact.button3")}</Button>{''}
+          <Button className="m-1" variant = 'primary'>{t("contact.button4")}</Button>{''}
         </p>
       </div>
 
 
       <div id='feature'>
-        <h3>Feedback Form</h3>
+        <h3>{t("contact.heading4")}</h3>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="feedbackForm">
-            <Form.Label>Your Feedback:</Form.Label>
+            <Form.Label>{t("contact.para1")}</Form.Label>
             <Form.Control
               as="textarea"
               rows={4}
-              placeholder="Write your feedback here..."
+              placeholder={t("contact.template")}
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
             />
           </Form.Group>
           <br/>
           <Button variant="success" type="submit">
-            Submit Feedback
+          {t("contact.submit")}
           </Button>
         </Form>
       </div>
