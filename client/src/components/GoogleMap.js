@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-function GoogleMap({ selectedStation }) {
+function GoogleMap({ selectedStation, selectedCity }) {
   const [station, setStation] = useState(null);
+  const [img_src, setImgSrc] = useState(null);
 
   useEffect(() => {
     if (selectedStation === "Image") {
@@ -18,6 +19,26 @@ function GoogleMap({ selectedStation }) {
     }
   }, [selectedStation]);
 
+  useEffect(() => {
+    switch (selectedCity) {
+      case "Twin Cities":
+        setImgSrc("images/Islamabad_Metro_Bus_Map_January_2023.png");
+        break;
+      case "Peshawar":
+        setImgSrc("images/Route-Map-of-Peshawar-BRT.jpg");
+        break;
+      case "Lahore":
+        setImgSrc("images/Lahore_Metro_Bus_Map.png");
+        break;
+      case "Multan":
+        setImgSrc("images/Multan_Metro_Bus_Map.png");
+        break;
+      case "Karachi":
+        setImgSrc("images/Karachi_Metro_Bus_Map.png");
+        break;
+    }
+  }, [selectedCity]);
+
   return (
     <>
       {station && (
@@ -31,13 +52,7 @@ function GoogleMap({ selectedStation }) {
           referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
       )}
-      {!station && (
-        <img
-          id="TwinCityMap"
-          src="images/Islamabad_Metro_Bus_Map_January_2023.png"
-          alt="map"
-        />
-      )}
+      {!station && <img id="TwinCityMap" src={img_src} alt="map" />}
     </>
   );
 }
