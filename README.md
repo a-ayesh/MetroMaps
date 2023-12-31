@@ -25,19 +25,19 @@ Responsible for mainly request-handling (querying, routing and calculations) and
 - Google Maps Platform
 
 ### Setup
-Clone the repository: `git clone https://github.com/a-ayesh/MetroMaps.git`
-Change directory to server: `cd server`
-Install server dependencies: `npm install`
-Copy the example environment file: `cp .env.example .env` 
-Provide API keys / MongoDB cluster string in `.env`
-Run the server (port `4000`): `npm run serve`
-Change directory to client: `cd ../client`
-Install client dependencies: `npm install`
-Start the client (port `3000`): `npm run start`
-
-Application will be running on `http://localhost:3000/`
+- Clone the repository: `git clone https://github.com/a-ayesh/MetroMaps.git`
+- Change directory to server: `cd server`
+- Install server dependencies: `npm install`
+- Copy the example environment file: `cp .env.example .env` 
+- Provide API keys / MongoDB cluster string in `.env`
+- Run the server (port `4000`): `npm run serve`
+- Change directory to client: `cd ../client`
+- Install client dependencies: `npm install`
+- Start the client (port `3000`): `npm run start`
+-Application will be running on `http://localhost:3000/`
 
 **Mock devices for testing**
+
 `device*.html` files inside `client/public/device/` directory may be opened while running application to test tracking functionality.
 
 ### Usage
