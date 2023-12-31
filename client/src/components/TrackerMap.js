@@ -9,11 +9,18 @@ import updateDevices from "./utils/updateDevices";
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYS1heWVzaCIsImEiOiJjbHFtOHdzMHQyd2Q0MmlubTh3eXlqeDc0In0.E2UnAwKp1j4EiC1NOpM9zA";
 
+/**
+ * Renders a map component based on the selected city.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.selectedCity - The selected city for which the map will be rendered.
+ * @returns {JSX.Element} The rendered map component.
+ */
 function TrackerMap({ selectedCity }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  // wait for map to mount
+  // upon city change, destroy old map and create new one
   useEffect(() => {
     destroyMap(map);
     map.current = createMap(selectedCity, mapContainer);

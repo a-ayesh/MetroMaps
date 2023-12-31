@@ -13,13 +13,14 @@ app.use(cors());
 app.use(bodyParser.json());
 DBconnect();
 
-// testing purposes
+// test respose
 app.get("/", (req, res) => {
   console.log("🔗[GET]: /");
 
   res.send("Hello World!");
 });
 
+// API routes
 app.use("/tracker", TrackerAPI);
 app.use("/home", HomeAPI);
 

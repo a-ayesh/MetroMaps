@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
+// schema for twin city stops
 const isbStopSchema = new Schema({
     line: String,
     name: String,

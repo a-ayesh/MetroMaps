@@ -2,35 +2,38 @@ import React from 'react';
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
 const AboutUs = () => {
+    const { t } = useTranslation();
     return (
         <div id="root">
           <header id="style-two">
-            <h1>About Us</h1>
-            <p>Our Metrobus Tracking Service is a revolutionary platform designed to streamline the commuting experience for passengers across Pakistan's cities. With a focus on convenience and real-time information, our service aims to offer a hassle-free way for regular passengers to navigate and track their journey within the extensive metrobus networks.</p>
+            <h1>{t("about.title")}</h1>
+            <p>{t("about.subtitle")}</p>
           </header>
           <section id="feature">
-            <h1>Features</h1>
+            <h1>{t("about.heading1")}</h1>
             <div className="feature-container">
                 <div className="feature">
                     <div className="text-content">
-                    <h3>Live Journey Tracking</h3>
-                    <p>Track your metrobus in real-time, getting live updates on its location and estimated arrival times at stops.</p>
+                    <h3>{t("about.feature1")}</h3>
+                    <p>{t("about.desc1")}</p>
                     </div>
                     <img src="images/live.png" alt="Live Tracking"/>
                 </div>
                 <div className="feature">
                     <div className="text-content">
-                    <h3>City-wise Metrobus Maps</h3>
-                    <p>Access comprehensive maps of metrobus routes across various cities in Pakistan for better route visualization.</p>
+                    <h3>{t("about.feature2")}</h3>
+                    <p>{t("about.desc2")}</p>
                     </div>
                     <img src="images/city.png" alt="Metrobus Maps" />
                 </div>
                 <div className="feature">
                     <div className="text-content">
-                    <h3>Next Stop Information</h3>
-                    <p>Get accurate details about the next stop to plan your commute more efficiently and comfortably.</p>
+                    <h3>{t("about.feature3")}</h3>
+                    <p>{t("about.desc3")}</p>
                     </div>
                     <img src="images/map.png" alt="Next Stop Information" />
                 </div>
@@ -38,31 +41,31 @@ const AboutUs = () => {
           </section>
           <div id="style-two">
             <section>
-              <h2>Our Mission</h2>
-              <p>Our service aims to bridge the gap between passengers and public transportation by leveraging technology. By offering live tracking and detailed metrobus maps, we empower our commuters to make informed decisions, reduce wait times, and navigate the metrobus network with ease.</p>
+              <h2>{t("about.heading1")}</h2>
+              <p>{t("about.para2")}</p>
             </section>
           </div>
           <div id="style-two">
             <section>
-              <h2>Our Team</h2>
+              <h2>{t("about.heading3")}</h2>
               <div className="team-members">
                 {/* Display team member details */}
                 <div className="team-member">
-                  <h3>Ayesh Ahmad</h3>
-                  <p>MERN Stack Developer</p>
+                  <h3>{t("about.sub1head")}</h3>
+                  <p>{t("about.subpara1")}</p>
                 </div>
                 <div className="team-member">
-                  <h3>Muhammad Bin Usman</h3>
-                  <p>MERN Stack Developer</p>
+                  <h3>{t("about.sub2head")}</h3>
+                  <p>{t("about.subpara2")}</p>
                 </div>
               </div>
             </section>
           </div>
           <footer id='feature'>
             <center>
-                <h4>For further information.</h4>
+                <h4>{t("about.closing")}</h4>
                 <Link to='/contact'>
-                <Button variant="success" size="md">Contact Us</Button>
+                <Button variant="success" size="md">{t("about.contact")}</Button>
                 </Link>
             </center>
 

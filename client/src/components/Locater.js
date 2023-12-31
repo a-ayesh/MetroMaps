@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
+/**
+ * Renders a component that allows the user to find their closest metro station.
+ * Uses geolocation to get the user's location and fetches the closest stop based on the coordinates.
+ *
+ * @returns {JSX.Element} The Locater component.
+ */
 function Locater() {
+  const { t } = useTranslation();
   const [userLocation, setUserLocation] = useState(null);
   const [userCity, setUserCity] = useState(null);
 
+  // get user location
   const handleButtonClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -22,6 +32,7 @@ function Locater() {
     }
   };
 
+  // fetch closest stop to user location
   useEffect(() => {
     async function updateUserCity() {
       if (userLocation) {
@@ -45,11 +56,14 @@ function Locater() {
           block
           onClick={handleButtonClick}
         >
-          Find Your Closest Metro Station
+          {t("locater.button")}
         </Button>
       </div>
       {userCity && (
-        <div id="Locater-map" className="border m-3 col-8 mx-auto p-3 shadow-lg">
+        <div
+          id="Locater-map"
+          className="border m-3 col-8 mx-auto p-3 shadow-lg"
+        >
           <iframe
             src={userCity}
             width="100%"

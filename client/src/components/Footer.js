@@ -1,6 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
+/**
+ * Footer component for the MetroMaps application.
+ * Renders the footer section with social media links, company information, and contact details.
+ * @returns {JSX.Element} The rendered Footer component.
+ */
 function Footer() {
   return (
     <footer className="bg-light text-center text-lg-start text-muted mt-5">

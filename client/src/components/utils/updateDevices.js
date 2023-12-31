@@ -1,3 +1,9 @@
+/**
+ * Updates the devices on the map.
+ * 
+ * @param {object} map - The map object.
+ * @returns {void}
+ */
 function updateDevices(map) {
   console.log("here");
   const fetchData = async () => {

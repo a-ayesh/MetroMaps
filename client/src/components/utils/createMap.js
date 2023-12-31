@@ -1,5 +1,11 @@
 import mapboxgl from "mapbox-gl";
 
+/**
+ * Creates a map using Mapbox GL and sets the initial center and max bounds based on the specified city.
+ * @param {string} city - The name of the city for which the map is being created.
+ * @param {Object} mapContainer - The reference to the HTML element that will contain the map.
+ * @returns {mapboxgl.Map} The created Mapbox GL map instance.
+ */
 function createMap(city, mapContainer) {
   let center;
   let maxBounds;

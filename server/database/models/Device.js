@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
+// schema for tracking devices
 const deviceSchema = new Schema({
     name: String,
     coordinates: Array,

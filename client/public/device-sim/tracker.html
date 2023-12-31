@@ -38,15 +38,12 @@
       async function sendDeviceLocation() {
         const deviceCoordinates = await getDeviceLocation();
 
-        // Data to be sent in the POST request
         const postData = {
           name: agent,
           coordinates: deviceCoordinates,
         };
 
-        // Perform the POST request using the fetch API
         fetch("http://localhost:4000/tracker/update", {
-        // fetch("https://metromapsserver-ugap.onrender.com/api/devices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -67,7 +64,6 @@
           });
       }
 
-      // Execute the sendDeviceLocation function every 10 seconds
       setInterval(sendDeviceLocation, 10000);
     </script>
   </body>
