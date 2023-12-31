@@ -13,6 +13,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi from 'i18next-http-backend';
 import { useTranslation, initReactI18next } from "react-i18next";
 
+// translation
 i18next
   .use(HttpApi)
   .use(LanguageDetector)
@@ -26,11 +27,11 @@ i18next
       order: ['path', 'cookie', 'htmlTag'],
       caches: ['cookie'],
     },
-    // react: { useSuspense: false },
     backend: {
       loadPath: '/assets/locales/{{lng}}/translation.json',
     },
   })
+
 const router = createBrowserRouter([
 {
   element: <App />,

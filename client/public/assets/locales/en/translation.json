@@ -1,4 +1,7 @@
 {
+    "locater":{
+        "button": "Find Your Closest Metro Station"
+    },
     "navbar":{
         "Twin" : "Twin Cities",
         "Peshawar" : "Peshawar",

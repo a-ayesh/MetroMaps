@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 
+/**
+ * Renders a Google Map component.
+ * @param {Object} props - The component props.
+ * @param {string} props.selectedStation - The selected station.
+ * @param {string} props.selectedCity - The selected city.
+ * @returns {JSX.Element} - The Google Map component.
+ */
 function GoogleMap({ selectedStation, selectedCity }) {
   const [station, setStation] = useState(null);
   const [img_src, setImgSrc] = useState(null);
 
+  // query DB for google location of requested stop
   useEffect(() => {
     if (selectedStation === "Image") {
       setStation(null);
@@ -19,6 +27,7 @@ function GoogleMap({ selectedStation, selectedCity }) {
     }
   }, [selectedStation]);
 
+  // set map image based on selected city
   useEffect(() => {
     switch (selectedCity) {
       case "Twin Cities":

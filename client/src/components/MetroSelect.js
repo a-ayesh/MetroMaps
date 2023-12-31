@@ -5,6 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 
+/**
+ * MetroSelect component displays a list of metro stops based on the selected city.
+ * It allows the user to select a metro station and triggers the onStationSelect callback.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.onStationSelect - The callback function to be called when a station is selected.
+ * @param {string} props.selectedCity - The selected city.
+ * @returns {JSX.Element} The MetroSelect component.
+ */
 function MetroSelect({ onStationSelect, selectedCity }) {
   const [stops, setStops] = useState([]);
 
