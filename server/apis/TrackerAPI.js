@@ -1,14 +1,15 @@
 import { Router } from "express";
-import Stop from "../models/Stop.js";
-import ISBstop from "../models/ISBstop.js";
-import Device from "../models/Device.js";
+import Stop from "../database/models/Stop.js";
+import ISBstop from "../database/models/ISBstop.js";
+import Device from "../database/models/Device.js";
 import dotenv from "dotenv";
+import calculateDistance from "./utils/calculateDistance.js";
 
 dotenv.config();
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 const router = Router();
 
-// query DB for all stops and send them to client
+// query DB for city's stops and send them to client
 router.get("/initialize", async (req, res) => {
   console.log("🔗[GET]: /tracker/initialize");
 
@@ -27,7 +28,7 @@ router.get("/initialize", async (req, res) => {
   }
 });
 
-// query DB for all devices and send them to client
+// query DB for all devices in city, calculate distance to next stop, send api call to mapbox for route, and send them to client
 router.get("/update", async (req, res) => {
   console.log("🔗[GET]: /tracker/update");
 
@@ -37,31 +38,9 @@ router.get("/update", async (req, res) => {
   for (const device of devices) {
     let stop = await Stop.findOne({ name: device.nextStop });
 
-    function calculateDistance(coord1, coord2) {
-      const [lon1, lat1] = coord1;
-      const [lon2, lat2] = coord2;
-
-      const R = 6371e3; // Earth's radius in meters
-      const phi1 = (lat1 * Math.PI) / 180;
-      const phi2 = (lat2 * Math.PI) / 180;
-      const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
-      const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
-
-      const a =
-        Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
-        Math.cos(phi1) *
-          Math.cos(phi2) *
-          Math.sin(deltaLambda / 2) *
-          Math.sin(deltaLambda / 2);
-
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-      const distance = R * c;
-      return distance;
-    }
-
     const thresholdDistance = 30;
     let distance = calculateDistance(device.coordinates, stop.coordinates);
+
     while (distance < thresholdDistance) {
       stop = await Stop.findOne({ name: stop.nextStop });
       distance = calculateDistance(device.coordinates, stop.coordinates);
@@ -90,14 +69,15 @@ router.get("/update", async (req, res) => {
   res.send({ message: "Updated Map Locations", deviceArray });
 });
 
-// update DB with new coordinates
+// update DB with new device coordinates
 router.post("/update", async (req, res) => {
   const { name, coordinates } = req.body;
   console.log(`🔗[POST]: /tracker/update from ${name}`);
-  
+
   const device = await Device.findOne({ name: name });
   device.coordinates = coordinates;
   await device.save();
+
   res.send({ message: `Updated DB: ${device.name}` });
 });
 

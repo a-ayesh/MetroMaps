@@ -9,4 +9,5 @@ async function DBconnect() {
   console.log("🛢️ [mongodb]: Connected to MongoDB");
 }
 
+// connects to DB
 export default DBconnect;
