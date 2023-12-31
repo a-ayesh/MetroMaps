@@ -1,4 +1,13 @@
 ## MetroMaps
+<hr />
+<strong>NOTE</strong>
+
+As of the latest README commit:
+- Live journey tracking is only offered for NUST via mock devices
+- City wise metrobus route-maps and info are only available for Islamabad
+
+**IMPLEMENETED FUNCTIONALITY IS TO BE EXTENDED IN FUTURE PATCHES, THIS IS SOLELY FOR DEMONSTRATION PURPOSES**
+<hr />
 MetroMaps is a go-to portal for real-time updates on routes, timings, and live tracking of Pakistan's public transport system. Our user-friendly platform aims to streamline  travel experience, ensuring informed and seamless utilization of public transportation across the country.
 
 ### Features
@@ -6,6 +15,7 @@ MetroMaps is a go-to portal for real-time updates on routes, timings, and live t
 - Next stop and closest station info
 - City wise metrobus route-maps info
 - Bilingual support to cater Pakistani citizens
+
 
 ### Architecture
 The application follows a Client-Server architecture:
